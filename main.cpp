@@ -10,7 +10,7 @@ int main()
 {
   srand(time(NULL));
 
-  sf::RenderWindow window(sf::VideoMode(conf::windowLength, conf::windowHeight), "Carvelution");
+  sf::RenderWindow window(sf::VideoMode(conf::windowHeight, conf::windowLength), "Carvelution");
   window.setVerticalSyncEnabled(true);
   window.setFramerateLimit(conf::fps);
   
