@@ -26,7 +26,7 @@ int main()
             window.close();
         }
 
-      window.clear(sf::Color::Black);
+      window.clear(sf::Color::White);
       world.Step(conf::timeStep, conf::velocityIterations, conf::positionIterations);
       car.draw(window);
       window.display();

@@ -29,6 +29,11 @@ int randWheel()
   return rand() % 8;
 }
 
+int randHue()
+{
+  return 64 + (rand() % 192);
+}
+
 Car::Car(b2World* setWorld)
 {
   /*The random initializer for a car. */
@@ -44,14 +49,17 @@ Car::Car(b2World* setWorld)
       wheel[i][1] = randLength();
     }
 
+  color = sf::Color(randHue(), randHue(), randHue());
+
   buildBody();
 }
 
-Car::Car(float32 setAngleWeight[8], float32 setLegLength[8], float32 setWheel[2][2], b2World* setWorld)
+Car::Car(float32 setAngleWeight[8], float32 setLegLength[8], float32 setWheel[2][2], sf::Color setColor, b2World* setWorld)
 {
   std::copy(legAngleWeight, legAngleWeight + 8, setAngleWeight);
   std::copy(legLength, legLength + 8, setLegLength);
   std::copy(&wheel[0][0], &wheel[0][0] + 4, &setWheel[0][0]);
+  color = setColor;
   world = setWorld;
   
   buildBody();
@@ -75,7 +83,7 @@ void Car::buildBody()
   float32 angle = 0;
   for (int i = 0; i < 8; i++)//find totalAngleWeight
     {
-      totalAngleWeight += legAngleWeight[0];
+      totalAngleWeight += legAngleWeight[i];
     }
 
   drawPolygon.setPoint(0, sf::Vector2f(legLength[0], 0.0f));
@@ -95,6 +103,13 @@ void Car::buildBody()
   fixtureDef.density = conf::carDensity;
   fixtureDef.friction = conf::carFriction;
   fixtureDef.restitution = conf::carRestitution;
+
+  sf::Color tempColor = color;
+  tempColor.a = 200;
+  drawPolygon.setFillColor(tempColor);
+  drawPolygon.setOutlineThickness(0.05f * conf::drawScale);
+  tempColor.a = 255;
+  drawPolygon.setOutlineColor(tempColor);
 
   body->CreateFixture(&fixtureDef);
 }
