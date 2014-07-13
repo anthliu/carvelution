@@ -1,11 +1,15 @@
 #include <SFML/Graphics.hpp>
 #include <Box2d/Box2d.h>
+#include <stdio.h>
 #include <random>
+#include <time.h>
 #include "car.hpp"
 #include "configurations.hpp"
 
 int main()
 {
+  srand(time(NULL));
+
   sf::RenderWindow window(sf::VideoMode(conf::windowLength, conf::windowHeight), "Carvelution");
   window.setVerticalSyncEnabled(true);
   window.setFramerateLimit(conf::fps);

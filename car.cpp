@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <Box2d/Box2d.h>
+#include <stdio.h>
 #include <cmath>
 #include <random>
 #include <algorithm>
@@ -10,9 +11,7 @@ float32 randAngleWeight()
 {
   /*Retrieves a random weight from 0.02 to 1.0
    */
-  std::default_random_engine generator;
-  std::uniform_real_distribution<float32> distribution(conf::minAngleWeight, 1.0f);
-  return distribution(generator);
+  return conf::minAngleWeight + (static_cast <float> (rand()) / static_cast <float> (RAND_MAX / (1.0 - conf::minAngleWeight)));
 }
 
 float32 randLength()
@@ -21,17 +20,13 @@ float32 randLength()
 
     todo - set max wheel ratio*/
 
-  std::default_random_engine generator;
-  std::uniform_real_distribution<float32> distribution(0.0f, conf::minAngleWeight);
-  return distribution(generator);
+  return (static_cast <float> (rand()) / static_cast <float> (RAND_MAX / conf::maxLength));
 }
 
 int randWheel()
 {
   /*rand number from 0 to 7*/
-  std::default_random_engine generator;
-  std::uniform_real_distribution<int> distribution(0, 8);
-  return distribution(generator);
+  return rand() % 8;
 }
 
 Car::Car(b2World* setWorld)
@@ -89,7 +84,7 @@ void Car::buildBody()
     {
       angle += 2 * M_PI * legAngleWeight[i - 1] / totalAngleWeight;
       vertices[i].Set(legLength[i] * cos(angle), legLength[i] * sin(angle));
-      drawPolygon.setPoint(i, sf::Vector2f(legLength[i] * cos(angle), legLength[i] * sin(angle)));
+      drawPolygon.setPoint(i, sf::Vector2f(conf::drawScale * legLength[i] * cos(angle), conf::drawScale * legLength[i] * sin(angle)));
     }
   
   b2PolygonShape polygon;
@@ -108,7 +103,7 @@ void Car::draw(sf::RenderWindow& window)
 {
   //first get the new position of the polygon then draw
   b2Vec2 polygonPosition = body->GetPosition();
-  drawPolygon.setPosition(sf::Vector2f(polygonPosition.x, polygonPosition.y));
+  drawPolygon.setPosition(sf::Vector2f(polygonPosition.x, -1 * polygonPosition.y));
   drawPolygon.setRotation(body->GetAngle());
 
   window.draw(drawPolygon);
