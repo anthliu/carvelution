@@ -16,12 +16,13 @@ class Car
   float32 wheel[2][2];
   b2Body* body;
   b2World* world;
+  sf::ConvexShape drawPolygon;
 
   void buildBody();//build the body in b2World
 public:
   Car(b2World* setWorld);//initialize random Car
   Car(float32 setAngleWeight[8], float32 setLegLength[8], float32 setWheel[2][2], b2World* setWorld);
-  draw(sf::RenderWindow& window);
+  void draw(sf::RenderWindow& window);
 }
 
 #endif
