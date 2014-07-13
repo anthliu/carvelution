@@ -3,7 +3,6 @@
 #include <cmath>
 #include <random>
 #include <algorithm>
-
 #include "car.hpp"
 #include "configurations.hpp"
 
@@ -69,7 +68,7 @@ Car::buildBody()
   b2BodyDef bodyDef;
   bodyDef.type = b2_dynamicBody;
   bodyDef.position.Set(0.0f, 4.0f);
-  body = world.CreateBody(&bodyDef);
+  body = world->CreateBody(&bodyDef);
 
   // - make the polygon shape for box2d and SFML
   drawPolygon.setPointCount(8);

@@ -23,6 +23,6 @@ public:
   Car(b2World* setWorld);//initialize random Car
   Car(float32 setAngleWeight[8], float32 setLegLength[8], float32 setWheel[2][2], b2World* setWorld);
   void draw(sf::RenderWindow& window);
-}
+};
 
 #endif
