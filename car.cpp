@@ -10,8 +10,9 @@ float32 randAngleWeight()
 {
   /*Retrieves a random weight from 0.02 to 1.0
    */
-  std::uniform_real_distribution<float32> angle(conf::minAngleWeight, 1.0f);
-  return angle;
+  std::default_random_engine generator;
+  std::uniform_real_distribution<float32> distribution(conf::minAngleWeight, 1.0f);
+  return distribution(generator);
 }
 
 float32 randLength()
@@ -20,24 +21,26 @@ float32 randLength()
 
     todo - set max wheel ratio*/
 
-  std::uniform_real_distribution<float32> length(0.0f, conf::minAngleWeight);
-  return length;
+  std::default_random_engine generator;
+  std::uniform_real_distribution<float32> distribution(0.0f, conf::minAngleWeight);
+  return distribution(generator);
 }
 
 int randWheel()
 {
   /*rand number from 0 to 7*/
-  std::uniform_real_distribution<int> number(0, 8);
-  return number;
+  std::default_random_engine generator;
+  std::uniform_real_distribution<int> distribution(0, 8);
+  return distribution(generator);
 }
 
 Car::Car(b2World* setWorld)
 {
   /*The random initializer for a car. */
-  world = setWorld
+  world = setWorld;
   for (int i = 0; i < 8; i++)
     {
-      legAngle[i] = randAngleWeight();
+      legAngleWeight[i] = randAngleWeight();
       legLength[i] = randLength();
     }
   for (int i = 0; i < 2; i++)
@@ -51,15 +54,15 @@ Car::Car(b2World* setWorld)
 
 Car::Car(float32 setAngleWeight[8], float32 setLegLength[8], float32 setWheel[2][2], b2World* setWorld)
 {
-  legAngleWeight = setAngleWeight;
-  legLength = setLegLength;
-  wheel = setWheel;
+  std::copy(legAngleWeight, legAngleWeight + 8, setAngleWeight);
+  std::copy(legLength, legLength + 8, setLegLength);
+  std::copy(&wheel[0][0], &wheel[0][0] + 4, &setWheel[0][0]);
   world = setWorld;
   
   buildBody();
 }
 
-Car::buildBody()
+void Car::buildBody()
 {
   /* the center of the car is the origin; (0.0, 0.0)
    
@@ -90,7 +93,7 @@ Car::buildBody()
     }
   
   b2PolygonShape polygon;
-  polygon.Set(vertices, count);
+  polygon.Set(vertices, 8);
 
   b2FixtureDef fixtureDef;
   fixtureDef.shape = &polygon;
@@ -106,7 +109,7 @@ void Car::draw(sf::RenderWindow& window)
   //first get the new position of the polygon then draw
   b2Vec2 polygonPosition = body->GetPosition();
   drawPolygon.setPosition(sf::Vector2f(polygonPosition.x, polygonPosition.y));
-  drawPolygon.setAngle(body->GetAngle());
+  drawPolygon.setRotation(body->GetAngle());
 
   window.draw(drawPolygon);
 }
