@@ -119,7 +119,7 @@ void Car::draw(sf::RenderWindow& window)
   //first get the new position of the polygon then draw
   b2Vec2 polygonPosition = body->GetPosition();
   drawPolygon.setPosition(sf::Vector2f(conf::drawScale * polygonPosition.x, -1 * conf::drawScale * polygonPosition.y));
-  drawPolygon.setRotation(body->GetAngle());
+  drawPolygon.setRotation((-180.f / M_PI) * body->GetAngle());
 
   window.draw(drawPolygon);
 }
@@ -127,4 +127,10 @@ void Car::draw(sf::RenderWindow& window)
 Car::~Car()
 {
   world->DestroyBody(body);
+}
+
+const b2Vec2 Car::getCenter()
+{
+  b2Vec2 position = body->GetPosition();
+  return b2Vec2(conf::drawScale * position.x, -1 * conf::drawScale * position.y);
 }
