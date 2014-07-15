@@ -69,7 +69,7 @@ void Car::buildBody()
 {
   /* the center of the car is the origin; (0.0, 0.0)
    
-   todo - set fixture constants such as friction, density etc.*/
+   */
 
   b2BodyDef bodyDef;
   bodyDef.type = b2_dynamicBody;
@@ -122,4 +122,9 @@ void Car::draw(sf::RenderWindow& window)
   drawPolygon.setRotation(body->GetAngle());
 
   window.draw(drawPolygon);
+}
+
+Car::~Car()
+{
+  world->DestroyBody(body);
 }

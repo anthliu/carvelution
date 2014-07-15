@@ -24,6 +24,7 @@ class Car
 public:
   Car(b2World* setWorld);//initialize random Car
   Car(float32 setAngleWeight[8], float32 setLegLength[8], float32 setWheel[2][2], sf::Color setColor, b2World* setWorld);
+  ~Car();
   void draw(sf::RenderWindow& window);
 };
 
