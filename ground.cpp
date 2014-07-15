@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "ground.hpp"
+#include "configurations.hpp"
 
 Ground::Ground(b2World* setWorld) : point(3)
 {
@@ -17,6 +18,14 @@ Ground::Ground(b2World* setWorld) : point(3)
 
 Ground::~Ground()
 {
-  world->DestroyBody(body);
 }
 
+void Ground::buildBody()
+{
+  b2ChainShape chain;
+  chain.CreateChain(&point[0], point.size());
+
+  b2BodyDef bodyDef;
+  body = world->CreateBody(&bodyDef);
+  body->CreateFixture(&chain, 0.0f);
+}

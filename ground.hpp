@@ -17,7 +17,7 @@ class Ground
   void buildBody();//build the ground in b2World / update the ground
 public:
   Ground(b2World* setWorld);
-  ~Ground;
+  ~Ground();
   void draw(sf::RenderWindow& window);
 };
 

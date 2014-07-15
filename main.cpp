@@ -4,6 +4,7 @@
 #include <random>
 #include <time.h>
 #include "car.hpp"
+#include "ground.hpp"
 #include "configurations.hpp"
 
 int main()
@@ -16,6 +17,7 @@ int main()
   
   b2World world(conf::gravity);
   Car car(&world);
+  Ground ground(&world);
 
   while (window.isOpen())
     {
