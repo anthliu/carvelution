@@ -12,7 +12,7 @@ int main()
   srand(time(NULL));
 
   sf::RenderWindow window(sf::VideoMode(conf::windowHeight, conf::windowLength), "Carvelution");
-  sf::View view(sf::FloatRect(0, 0, conf::windowHeight, conf::windowLength));
+  sf::View view(sf::FloatRect(-300.0, 0, conf::windowHeight, conf::windowLength));
   window.setVerticalSyncEnabled(true);
   window.setFramerateLimit(conf::fps);
   
@@ -30,9 +30,9 @@ int main()
             window.close();
         }
 
-      center = car.getCenter();
-      view.setCenter(center.x, center.y);
-      //window.setView(view);
+      //center = car.getCenter();
+      //view.setCenter(center.x, center.y);
+      window.setView(view);
       window.clear(sf::Color::White);
       world.Step(conf::timeStep, conf::velocityIterations, conf::positionIterations);
       car.draw(window);

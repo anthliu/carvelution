@@ -92,7 +92,7 @@ void Car::buildBody()
     {
       angle += 2 * M_PI * legAngleWeight[i - 1] / totalAngleWeight;
       vertices[i].Set(legLength[i] * cos(angle), legLength[i] * sin(angle));
-      drawPolygon.setPoint(i, sf::Vector2f(conf::drawScale * legLength[i] * cos(angle), conf::drawScale * legLength[i] * sin(angle)));
+      drawPolygon.setPoint(i, sf::Vector2f(conf::drawScale * legLength[i] * cos(angle), -1 * conf::drawScale * legLength[i] * sin(angle)));
     }
   
   b2PolygonShape polygon;
@@ -112,13 +112,15 @@ void Car::buildBody()
   drawPolygon.setOutlineColor(tempColor);
 
   body->CreateFixture(&fixtureDef);
+  b2Vec2 centerOfMass = body->GetWorldCenter();
+  drawPolygon.setOrigin(sf::Vector2f(centerOfMass.x, centerOfMass.y));
 }
 
 void Car::draw(sf::RenderWindow& window)
 {
   //first get the new position of the polygon then draw
-  b2Vec2 polygonPosition = body->GetPosition();
-  drawPolygon.setPosition(sf::Vector2f(conf::drawScale * polygonPosition.x, -1 * conf::drawScale * polygonPosition.y));
+  b2Vec2 polygonPosition = body->GetWorldCenter();
+  drawPolygon.setPosition(sf::Vector2f(conf::drawScale * polygonPosition.x, -1 * conf::drawScale * (polygonPosition.y)));
   drawPolygon.setRotation((-180.f / M_PI) * body->GetAngle());
 
   window.draw(drawPolygon);
@@ -131,6 +133,6 @@ Car::~Car()
 
 const b2Vec2 Car::getCenter()
 {
-  b2Vec2 position = body->GetPosition();
+  b2Vec2 position = body->GetWorldCenter();
   return b2Vec2(conf::drawScale * position.x, -1 * conf::drawScale * position.y);
 }

@@ -16,7 +16,7 @@ namespace conf
   const float32 maxLength = 5.0f;
 
   const float32 carDensity = 1.0f;
-  const float32 carFriction = 0.03f;
+  const float32 carFriction = 0.3f;
   const float32 carRestitution = 0.0f;
 
   const int drawScale = 40;
