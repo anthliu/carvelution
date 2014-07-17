@@ -4,12 +4,6 @@
 #include <SFML/Graphics.hpp>
 #include <Box2d/Box2d.h>
 
-float32 randAngleWeight();
-float32 randLength();
-float32 randWheelLength();
-int randWheel();
-int randHue();//random hue for random color generation
-
 class Car
 {
   /*The generic genetic car class*/
