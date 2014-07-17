@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "ground.hpp"
+#include "randomgen.hpp"
 #include "configurations.hpp"
 
 Ground::Ground(b2World* setWorld) : point(3)
@@ -9,9 +10,11 @@ Ground::Ground(b2World* setWorld) : point(3)
   world = setWorld;
 
   //first initialize the starting point of the car
-  point[0] = b2Vec2(-5.0f, -1 * conf::maxLength);
+  point[0] = b2Vec2(-10.0f, -1 * conf::maxLength);
   point[1] = b2Vec2(0.0f, -1 * conf::maxLength);
   point[2] = b2Vec2(5.0f, -1 * conf::maxLength);
+
+  extendBaseHilly(point);
 
   buildBody();
 }
@@ -39,7 +42,8 @@ void Ground::draw(sf::RenderWindow& window)
     {
       line[0] = sf::Vertex(sf::Vector2f(conf::drawScale * point[index - 1].x, -1 * conf::drawScale * point[index - 1].y));
       line[1] = sf::Vertex(sf::Vector2f(conf::drawScale * point[index].x, -1 * conf::drawScale * point[index].y));
-      line[index - 1].color = sf::Color::Black;
+      line[0].color = sf::Color::Black;
+      line[1].color = sf::Color::Black;
 
       window.draw(line, 2, sf::Lines);
     }

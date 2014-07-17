@@ -29,6 +29,11 @@ namespace conf
   const float32 maxTorque = 100.0f;
 
   const int drawScale = 40;
+
+  const int extendNumber = 10;
+  const float32 extendUnitLength = 4.0;
+
+  const float32 baseHillyChange = 0.5f;
 }
 
 #endif

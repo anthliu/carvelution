@@ -7,7 +7,7 @@ float32 randAngleWeight()
 {
   /*Retrieves a random weight from 0.02 to 1.0
    */
-  return conf::minAngleWeight + (static_cast <float> (rand()) / static_cast <float> (RAND_MAX / (1.0 - conf::minAngleWeight)));
+  return conf::minAngleWeight + (static_cast <float32> (rand()) / static_cast <float32> (RAND_MAX / (1.0 - conf::minAngleWeight)));
 }
 
 float32 randLength()
@@ -16,7 +16,7 @@ float32 randLength()
 
     */
 
-  return (static_cast <float> (rand()) / static_cast <float> (RAND_MAX / conf::maxLength));
+  return (static_cast <float32> (rand()) / static_cast <float32> (RAND_MAX / conf::maxLength));
 }
 
 float32 randWheelLength()
@@ -33,4 +33,13 @@ int randWheel()
 int randHue()
 {
   return 64 + (rand() % 192);
+}
+
+void extendBaseHilly(std::vector <b2Vec2>& setPoint)
+{
+  for (int i = 0; i < conf::extendNumber; i++)
+    {
+      float32 yChange = conf::baseHillyChange - (static_cast <float32> (rand()) / static_cast <float32> (RAND_MAX / (conf::baseHillyChange * 2)));
+      setPoint.push_back(b2Vec2(setPoint.back().x + conf::extendUnitLength, setPoint[0].y + yChange));
+    }
 }
