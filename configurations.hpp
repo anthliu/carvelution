@@ -22,10 +22,11 @@ namespace conf
 
   const float32 wheelLocationRatio = 7.0f / 8.0f;
   const float32 wheelDensity = 1.0f;
-  const float32 wheelFriction = 0.3f;
+  const float32 wheelFriction = 0.9f;
   const float32 wheelRestitution = 0.0f;
 
-  const float32 axisSpeed = 5.0f;
+  const float32 axisSpeed = -10.0f;
+  const float32 maxTorque = -10.0f;
 
   const int drawScale = 40;
 }

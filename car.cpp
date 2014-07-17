@@ -150,10 +150,12 @@ void Car::buildBody()
 
       axisDef[i].Initialize(body, wheelBody[i], wheelPosition[i]);
       axisDef[i].motorSpeed = conf::axisSpeed;
+      axisDef[i].maxMotorTorque = conf::maxTorque;
+      axisDef[i].enableMotor = true;
       axis[i] = (b2RevoluteJoint*)world->CreateJoint(&axisDef[i]);
       //SFML draw stuff
       drawWheel[i].setRadius(conf::drawScale * wheelLength[i]);
-      drawWheel[i].setPosition(wheelPosition[i].x * conf::drawScale, wheelPosition[i].y * -1 * conf::drawScale);
+      //drawWheel position is set when it is drawn
       tempColor = sf::Color::Black;
       tempColor.a = 200;
       drawWheel[i].setFillColor(tempColor);
@@ -171,17 +173,22 @@ void Car::draw(sf::RenderWindow& window)
   drawPolygon.setPosition(sf::Vector2f(conf::drawScale * polygonPosition.x, -1 * conf::drawScale * (polygonPosition.y)));
   drawPolygon.setRotation((-180.f / M_PI) * body->GetAngle());
 
-  //get wheel positions
+  window.draw(drawPolygon);
+
+  //get wheel positions then draw
   b2Vec2 wheelPosition[2];
+  float32 wheelAngle[2];
+  sf::Vector2f wheelCenter[2];
   for (int i = 0; i < 2; i++)
     {
       wheelPosition[i] = wheelBody[i]->GetWorldCenter();
-      drawWheel[i].setPosition(sf::Vector2f(conf::drawScale * wheelPosition[i].x, -1 * conf::drawScale * (wheelPosition[i].y)));
+      wheelCenter[i] = sf::Vector2f(conf::drawScale * wheelPosition[i].x - drawWheel[i].getRadius(), -1 * conf::drawScale * wheelPosition[i].y - drawWheel[i].getRadius());
+      drawWheel[i].setPosition(wheelCenter[i]);
 
+      wheelAngle[i] = wheelBody[i]->GetAngle();
       window.draw(drawWheel[i]);
     }
 
-  window.draw(drawPolygon);
 }
 
 Car::~Car()
