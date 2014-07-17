@@ -10,7 +10,7 @@ namespace conf
   const int velocityIterations = 8;
   const int positionIterations = 4;
 
-  const b2Vec2 gravity(0.0f, -10.0f);
+  const b2Vec2 gravity(0.0f, -14.0f);
 
   const float32 minAngleWeight = 0.10f;
   const float32 maxLength = 5.0f;
@@ -21,12 +21,12 @@ namespace conf
   const float32 carRestitution = 0.0f;
 
   const float32 wheelLocationRatio = 7.0f / 8.0f;
-  const float32 wheelDensity = 1.0f;
+  const float32 wheelDensity = 2.0f;
   const float32 wheelFriction = 0.9f;
   const float32 wheelRestitution = 0.0f;
 
-  const float32 axisSpeed = -10.0f;
-  const float32 maxTorque = -10.0f;
+  const float32 axisSpeed = -30.0f;
+  const float32 maxTorque = 100.0f;
 
   const int drawScale = 40;
 }

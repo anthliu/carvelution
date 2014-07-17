@@ -30,8 +30,8 @@ int main()
             window.close();
         }
 
-      //center = car.getCenter();
-      //view.setCenter(center.x, center.y);
+      center = car.getCenter();
+      view.setCenter(center.x, center.y);
       window.setView(view);
       window.clear(sf::Color::White);
       world.Step(conf::timeStep, conf::velocityIterations, conf::positionIterations);

@@ -9,9 +9,9 @@ Ground::Ground(b2World* setWorld) : point(3)
   world = setWorld;
 
   //first initialize the starting point of the car
-  point[0] = b2Vec2(-4.0f, -2 * conf::maxLength);
-  point[1] = b2Vec2(0.0f, -2 * conf::maxLength);
-  point[2] = b2Vec2(4.0f, -2 * conf::maxLength);
+  point[0] = b2Vec2(-5.0f, -1 * conf::maxLength);
+  point[1] = b2Vec2(0.0f, -1 * conf::maxLength);
+  point[2] = b2Vec2(5.0f, -1 * conf::maxLength);
 
   buildBody();
 }
@@ -34,11 +34,14 @@ void Ground::buildBody()
 
 void Ground::draw(sf::RenderWindow& window)
 {
-  std::vector <sf::Vertex> line(point.size());
-  for(std::vector<b2Vec2>::size_type index = 0; index < point.size(); index++)
+  sf::Vertex line[2];
+  for(std::vector<b2Vec2>::size_type index = 1; index < point.size(); index++)
     {
-      line[index] = sf::Vertex(sf::Vector2f(conf::drawScale * point[index].x, -1 * conf::drawScale * point[index].y));
-      line[index].color = sf::Color::Black;
+      line[0] = sf::Vertex(sf::Vector2f(conf::drawScale * point[index - 1].x, -1 * conf::drawScale * point[index - 1].y));
+      line[1] = sf::Vertex(sf::Vector2f(conf::drawScale * point[index].x, -1 * conf::drawScale * point[index].y));
+      line[index - 1].color = sf::Color::Black;
+
+      window.draw(line, 2, sf::Lines);
     }
-  window.draw(&line[0], point.size(), sf::Lines);
+
 }
