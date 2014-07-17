@@ -18,9 +18,14 @@ float32 randLength()
 {
   /*Retrieves a random length for either a "leg" or a wheel
 
-    todo - set max wheel ratio*/
+    */
 
   return (static_cast <float> (rand()) / static_cast <float> (RAND_MAX / conf::maxLength));
+}
+
+float32 randWheelLength()
+{
+  return randLength() / 2.0f;
 }
 
 int randWheel()
@@ -45,8 +50,8 @@ Car::Car(b2World* setWorld)
     }
   for (int i = 0; i < 2; i++)
     {
-      wheel[i][0] = randWheel();
-      wheel[i][1] = randLength();
+      wheelLeg[i] = randWheel();
+      wheelLength[i] = randWheelLength();
     }
 
   color = sf::Color(randHue(), randHue(), randHue());
@@ -54,11 +59,12 @@ Car::Car(b2World* setWorld)
   buildBody();
 }
 
-Car::Car(float32 setAngleWeight[8], float32 setLegLength[8], float32 setWheel[2][2], sf::Color setColor, b2World* setWorld)
+Car::Car(float32 setAngleWeight[8], float32 setLegLength[8], int setWheelLeg[2], float32 setWheelLength[2], sf::Color setColor, b2World* setWorld)
 {
   std::copy(legAngleWeight, legAngleWeight + 8, setAngleWeight);
   std::copy(legLength, legLength + 8, setLegLength);
-  std::copy(&wheel[0][0], &wheel[0][0] + 4, &setWheel[0][0]);
+  std::copy(wheelLeg, wheelLeg + 2, setWheelLeg);
+  std::copy(wheelLength, wheelLength + 2, setWheelLength);
   color = setColor;
   world = setWorld;
   
@@ -73,28 +79,29 @@ void Car::buildBody()
 
   b2BodyDef bodyDef;
   bodyDef.type = b2_dynamicBody;
-  bodyDef.position.Set(0.0f, 4.0f);
+  bodyDef.position.Set(0.0f, 0.0f);
   body = world->CreateBody(&bodyDef);
 
-  // - make the polygon shape for box2d and SFML
+  // - make the polygon shape for box2d and SFML, and make the wheels in box2d
   drawPolygon.setPointCount(8);
   b2Vec2 vertices[8];
   float32 totalAngleWeight = 0;
-  float32 angle = 0;
+  float32 angle[8] = {0};
   for (int i = 0; i < 8; i++)//find totalAngleWeight
     {
       totalAngleWeight += legAngleWeight[i];
     }
-
-  drawPolygon.setPoint(0, sf::Vector2f(legLength[0], 0.0f));
-  vertices[0].Set(legLength[0], 0.0f);//first vertice is always on the x axis
-  for (int i = 1; i < 8; i++)//set vertices; note: legAngleWeight[7] is not used because it determines the angle of vertice[0], and since verice[0] is always on the x axis, it only influences the totalAngleWeight
+  for (int i = 1; i < 8; i++)//set angles; angle[0] is 0
     {
-      angle += 2 * M_PI * legAngleWeight[i - 1] / totalAngleWeight;
-      vertices[i].Set(legLength[i] * cos(angle), legLength[i] * sin(angle));
-      drawPolygon.setPoint(i, sf::Vector2f(conf::drawScale * legLength[i] * cos(angle), -1 * conf::drawScale * legLength[i] * sin(angle)));
+      angle[i] = angle[i - 1] + 2 * M_PI * legAngleWeight[i - 1] / totalAngleWeight;
     }
-  
+  for (int i = 0; i < 8; i++)//set vertices; note: legAngleWeight[7] is not used because it determines the angle of vertice[0], and since verice[0] is always on the x axis, it only influences the totalAngleWeight
+    {
+      vertices[i].Set(legLength[i] * cos(angle[i]), legLength[i] * sin(angle[i]));
+      drawPolygon.setPoint(i, sf::Vector2f(conf::drawScale * legLength[i] * cos(angle[i]), -1 * conf::drawScale * legLength[i] * sin(angle[i])));
+    }
+
+  //box2d stuff for polygon
   b2PolygonShape polygon;
   polygon.Set(vertices, 8);
 
@@ -104,6 +111,9 @@ void Car::buildBody()
   fixtureDef.friction = conf::carFriction;
   fixtureDef.restitution = conf::carRestitution;
 
+  body->CreateFixture(&fixtureDef);
+
+  //SFML polygon stuff
   sf::Color tempColor = color;
   tempColor.a = 200;
   drawPolygon.setFillColor(tempColor);
@@ -111,9 +121,47 @@ void Car::buildBody()
   tempColor.a = 255;
   drawPolygon.setOutlineColor(tempColor);
 
-  body->CreateFixture(&fixtureDef);
+  //Align the SFML polygon rotating origin with the Box2d center of mass
   b2Vec2 centerOfMass = body->GetWorldCenter();
   drawPolygon.setOrigin(sf::Vector2f(centerOfMass.x, centerOfMass.y));
+
+  //Make wheels
+  b2BodyDef wheelBodyDef[2];
+  b2Vec2 wheelPosition[2];
+  b2CircleShape wheelShape[2];
+  b2FixtureDef wheelFixtureDef[2];
+  b2RevoluteJointDef axisDef[2];
+  for (int i = 0; i < 2; i++)
+    {
+      //box2d wheel stuff
+      wheelBodyDef[i].type = b2_dynamicBody;
+      wheelBody[i] = world->CreateBody(&wheelBodyDef[i]);
+
+      wheelPosition[i] = b2Vec2(vertices[wheelLeg[i]].x * conf::wheelLocationRatio, vertices[wheelLeg[i]].y * conf::wheelLocationRatio);
+      wheelShape[i].m_p = wheelPosition[i];
+      wheelShape[i].m_radius = wheelLength[i];
+
+      wheelFixtureDef[i].shape = &wheelShape[i];
+      wheelFixtureDef[i].density = conf::wheelDensity;
+      wheelFixtureDef[i].friction = conf::wheelFriction;
+      wheelFixtureDef[i].restitution = conf::wheelRestitution;
+
+      wheelBody[i]->CreateFixture(&wheelFixtureDef[i]);
+
+      axisDef[i].Initialize(body, wheelBody[i], wheelPosition[i]);
+      axisDef[i].motorSpeed = conf::axisSpeed;
+      axis[i] = (b2RevoluteJoint*)world->CreateJoint(&axisDef[i]);
+      //SFML draw stuff
+      drawWheel[i].setRadius(conf::drawScale * wheelLength[i]);
+      drawWheel[i].setPosition(wheelPosition[i].x * conf::drawScale, wheelPosition[i].y * -1 * conf::drawScale);
+      tempColor = sf::Color::Black;
+      tempColor.a = 200;
+      drawWheel[i].setFillColor(tempColor);
+      drawWheel[i].setOutlineThickness(0.05f * conf::drawScale);
+      tempColor.a = 255;
+      drawWheel[i].setOutlineColor(tempColor);
+    }
+
 }
 
 void Car::draw(sf::RenderWindow& window)
@@ -122,6 +170,16 @@ void Car::draw(sf::RenderWindow& window)
   b2Vec2 polygonPosition = body->GetWorldCenter();
   drawPolygon.setPosition(sf::Vector2f(conf::drawScale * polygonPosition.x, -1 * conf::drawScale * (polygonPosition.y)));
   drawPolygon.setRotation((-180.f / M_PI) * body->GetAngle());
+
+  //get wheel positions
+  b2Vec2 wheelPosition[2];
+  for (int i = 0; i < 2; i++)
+    {
+      wheelPosition[i] = wheelBody[i]->GetWorldCenter();
+      drawWheel[i].setPosition(sf::Vector2f(conf::drawScale * wheelPosition[i].x, -1 * conf::drawScale * (wheelPosition[i].y)));
+
+      window.draw(drawWheel[i]);
+    }
 
   window.draw(drawPolygon);
 }
