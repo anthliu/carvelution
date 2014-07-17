@@ -31,3 +31,14 @@ void Ground::buildBody()
   body = world->CreateBody(&bodyDef);
   body->CreateFixture(&chain, 0.0f);
 }
+
+void Ground::draw(sf::RenderWindow& window)
+{
+  std::vector <sf::Vertex> line(point.size());
+  for(std::vector<b2Vec2>::size_type index = 0; index < point.size(); index++)
+    {
+      line[index] = sf::Vertex(sf::Vector2f(conf::drawScale * point[index].x, -1 * conf::drawScale * point[index].y));
+      line[index].color = sf::Color::Black;
+    }
+  window.draw(&line[0], point.size(), sf::Lines);
+}

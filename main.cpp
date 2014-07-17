@@ -36,6 +36,7 @@ int main()
       window.clear(sf::Color::White);
       world.Step(conf::timeStep, conf::velocityIterations, conf::positionIterations);
       car.draw(window);
+      ground.draw(window);
       window.display();
     }
 
