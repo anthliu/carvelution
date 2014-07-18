@@ -17,7 +17,7 @@ namespace conf
   const int maxWheelSize = 3;
 
   const float32 carDensity = 1.0f;
-  const float32 carFriction = 0.3f;
+  const float32 carFriction = 0.7f;
   const float32 carRestitution = 0.0f;
 
   const float32 wheelLocationRatio = 7.0f / 8.0f;
@@ -26,14 +26,14 @@ namespace conf
   const float32 wheelRestitution = 0.0f;
 
   const float32 axisSpeed = -30.0f;
-  const float32 maxTorque = 100.0f;
+  const float32 maxTorque = 200.0f;
 
   const int drawScale = 40;
 
   const int extendNumber = 10;
   const float32 extendUnitLength = 4.0;
 
-  const float32 baseHillyChange = 0.5f;
+  const float32 baseHillyChange = 1.0f;
 }
 
 #endif
