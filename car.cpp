@@ -85,7 +85,7 @@ void Car::buildBody()
   sf::Color tempColor = color;
   tempColor.a = 200;
   drawPolygon.setFillColor(tempColor);
-  drawPolygon.setOutlineThickness(0.05f * conf::drawScale);
+  drawPolygon.setOutlineThickness(conf::drawBorder);
   tempColor.a = 255;
   drawPolygon.setOutlineColor(tempColor);
 
@@ -127,7 +127,7 @@ void Car::buildBody()
       tempColor = sf::Color::Black;
       tempColor.a = 200;
       drawWheel[i].setFillColor(tempColor);
-      drawWheel[i].setOutlineThickness(0.05f * conf::drawScale);
+      drawWheel[i].setOutlineThickness(conf::drawBorder);
       tempColor.a = 255;
       drawWheel[i].setOutlineColor(tempColor);
     }

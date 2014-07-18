@@ -37,15 +37,21 @@ void Ground::buildBody()
 
 void Ground::draw(sf::RenderWindow& window)
 {
-  sf::Vertex line[2];
+  sf::Vertex line[4];
+
   for(std::vector<b2Vec2>::size_type index = 1; index < point.size(); index++)
     {
       line[0] = sf::Vertex(sf::Vector2f(conf::drawScale * point[index - 1].x, -1 * conf::drawScale * point[index - 1].y));
-      line[1] = sf::Vertex(sf::Vector2f(conf::drawScale * point[index].x, -1 * conf::drawScale * point[index].y));
+      line[1] = sf::Vertex(sf::Vector2f(conf::drawScale * point[index - 1].x, -1 * conf::drawScale * point[index - 1].y + conf::groundThickness));
+      line[2] = sf::Vertex(sf::Vector2f(conf::drawScale * point[index].x, -1 * conf::drawScale * point[index].y));
+      line[3] = sf::Vertex(sf::Vector2f(conf::drawScale * point[index].x, -1 * conf::drawScale * point[index].y + conf::groundThickness));
+
       line[0].color = sf::Color::Black;
       line[1].color = sf::Color::Black;
+      line[2].color = sf::Color::Black;
+      line[3].color = sf::Color::Black;
 
-      window.draw(line, 2, sf::Lines);
+      window.draw(line, 4, sf::TrianglesStrip);
     }
 
 }

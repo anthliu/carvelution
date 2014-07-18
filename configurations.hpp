@@ -29,6 +29,8 @@ namespace conf
   const float32 maxTorque = 300.0f;
 
   const int drawScale = 30;
+  const int drawBorder = 3;
+  const int groundThickness = 20;
 
   const int extendNumber = 10;
   const float32 extendUnitLength = 4.0;
