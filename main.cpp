@@ -25,6 +25,8 @@ int main()
   int seconds = 0;
   float32 timeGoal = 0;//if the maxDist is not greater than timeGoal in conf::timeLimit, than end the car trial
   float32 maxDist = 0;
+  int extensions = 0;
+  float32 extensionUnit = conf::drawScale * ((float32)conf::extendNumber * conf::extendUnitLength);
 
   while (window.isOpen())
     {
@@ -37,7 +39,14 @@ int main()
 
       center = car.getCenter();
       if (center.x > maxDist)
-	maxDist = center.x;
+	{
+	  maxDist = center.x;
+	  if (maxDist >= extensions * extensionUnit + extensionUnit / 2)
+	    {
+	      extensions++;
+	      ground.extend();
+	    }
+	}
 
       frames++;
       if (frames == conf::fps)

@@ -49,3 +49,9 @@ void Ground::draw(sf::RenderWindow& window)
     }
 
 }
+
+void Ground::extend()
+{
+  extendBaseHilly(point);
+  buildBody();
+}

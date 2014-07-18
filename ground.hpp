@@ -19,6 +19,7 @@ public:
   Ground(b2World* setWorld);
   ~Ground();
   void draw(sf::RenderWindow& window);
+  void extend();
 };
 
 #endif
