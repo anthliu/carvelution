@@ -25,7 +25,7 @@ public:
   Car(float32 setAngleWeight[8], float32 setLegLength[8], int setWheelLeg[2], float32 wheelLength[2], sf::Color setColor, b2World* setWorld);
   ~Car();
   void draw(sf::RenderWindow& window);
-  const b2Vec2 getCenter();
+  b2Vec2 getCenter() const;
 };
 
 #endif

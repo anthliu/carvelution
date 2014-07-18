@@ -164,7 +164,7 @@ Car::~Car()
   world->DestroyBody(body);
 }
 
-const b2Vec2 Car::getCenter()
+b2Vec2 Car::getCenter() const
 {
   b2Vec2 position = body->GetWorldCenter();
   return b2Vec2(conf::drawScale * position.x, -1 * conf::drawScale * position.y);

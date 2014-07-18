@@ -1,8 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <Box2d/Box2d.h>
 #include <stdio.h>
-#include <random>
 #include <time.h>
+#include <vector>
 #include "car.hpp"
 #include "ground.hpp"
 #include "configurations.hpp"
@@ -21,6 +21,11 @@ int main()
   Car car(&world);
   Ground ground(&world);
 
+  int frames = 0;
+  int seconds = 0;
+  float32 timeGoal = 0;//if the maxDist is not greater than timeGoal in conf::timeLimit, than end the car trial
+  float32 maxDist = 0;
+
   while (window.isOpen())
     {
       sf::Event event;
@@ -31,6 +36,30 @@ int main()
         }
 
       center = car.getCenter();
+      if (center.x > maxDist)
+	maxDist = center.x;
+
+      frames++;
+      if (frames == conf::fps)
+	{
+	  frames = 0;
+	  seconds++;
+	  if (seconds == conf::timeLimit)
+	    {
+	      seconds = 0;
+	      if (maxDist <= timeGoal)
+		{
+		  maxDist = 0;
+		  timeGoal = 0;
+		  //car = Car(&world);
+		}
+	      else
+		{
+		  timeGoal = maxDist;
+		}
+	    }
+	}
+
       view.setCenter(center.x, center.y);
       window.setView(view);
       window.clear(sf::Color::White);

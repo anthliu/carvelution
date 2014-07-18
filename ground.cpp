@@ -11,8 +11,8 @@ Ground::Ground(b2World* setWorld) : point(3)
 
   //first initialize the starting point of the car
   point[0] = b2Vec2(-10.0f, -1 * conf::maxLength);
-  point[1] = b2Vec2(0.0f, -1 * conf::maxLength);
-  point[2] = b2Vec2(5.0f, -1 * conf::maxLength);
+  point[1] = b2Vec2(-5.0f, -1 * conf::maxLength);
+  point[2] = b2Vec2(0.0f, -1 * conf::maxLength);
 
   extendBaseHilly(point);
 
