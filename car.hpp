@@ -24,6 +24,8 @@ public:
   Car(b2World* setWorld);//initialize random Car
   Car(float32 setAngleWeight[8], float32 setLegLength[8], int setWheelLeg[2], float32 wheelLength[2], sf::Color setColor, b2World* setWorld);
   ~Car();
+  void reset();
+  void reset(float32 setAngleWeight[8], float32 setLegLength[8], int setWheelLeg[2], float32 wheelLength[2], sf::Color setColor);
   void draw(sf::RenderWindow& window);
   b2Vec2 getCenter() const;
 };

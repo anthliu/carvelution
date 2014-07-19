@@ -9,8 +9,13 @@
 
 Car::Car(b2World* setWorld)
 {
-  /*The random initializer for a car. */
   world = setWorld;
+  reset();
+}
+
+void Car::reset()
+{
+  /*The random initializer for a car. */
   for (int i = 0; i < 8; i++)
     {
       legAngleWeight[i] = randAngleWeight();
@@ -29,13 +34,19 @@ Car::Car(b2World* setWorld)
 
 Car::Car(float32 setAngleWeight[8], float32 setLegLength[8], int setWheelLeg[2], float32 setWheelLength[2], sf::Color setColor, b2World* setWorld)
 {
+  world = setWorld;
+
+  reset(setAngleWeight, setLegLength, setWheelLeg, setWheelLength, setColor);
+}
+
+void Car::reset(float32 setAngleWeight[8], float32 setLegLength[8], int setWheelLeg[2], float32 setWheelLength[2], sf::Color setColor)
+{
   std::copy(legAngleWeight, legAngleWeight + 8, setAngleWeight);
   std::copy(legLength, legLength + 8, setLegLength);
   std::copy(wheelLeg, wheelLeg + 2, setWheelLeg);
   std::copy(wheelLength, wheelLength + 2, setWheelLength);
   color = setColor;
-  world = setWorld;
-  
+
   buildBody();
 }
 
