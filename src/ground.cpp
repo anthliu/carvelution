@@ -1,9 +1,9 @@
 #include <Box2d/Box2d.h>
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include "ground.hpp"
-#include "randomgen.hpp"
-#include "configurations.hpp"
+#include "../include/ground.hpp"
+#include "../include/randomgen.hpp"
+#include "../include/configurations.hpp"
 
 Ground::Ground(b2World* setWorld) : point(3)
 {

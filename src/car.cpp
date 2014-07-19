@@ -3,9 +3,9 @@
 #include <stdio.h>
 #include <cmath>
 #include <algorithm>
-#include "car.hpp"
-#include "randomgen.hpp"
-#include "configurations.hpp"
+#include "../include/car.hpp"
+#include "../include/randomgen.hpp"
+#include "../include/configurations.hpp"
 
 Car::Car(b2World* setWorld)
 {

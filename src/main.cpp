@@ -3,9 +3,9 @@
 #include <stdio.h>
 #include <time.h>
 #include <vector>
-#include "car.hpp"
-#include "ground.hpp"
-#include "configurations.hpp"
+#include "../include/car.hpp"
+#include "../include/ground.hpp"
+#include "../include/configurations.hpp"
 
 int main()
 {

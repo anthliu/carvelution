@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <Box2d/Box2d.h>
-#include "randomgen.hpp"
-#include "configurations.hpp"
+#include "../include/randomgen.hpp"
+#include "../include/configurations.hpp"
 
 float32 randAngleWeight()
 {
