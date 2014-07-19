@@ -17,6 +17,12 @@ public:
 
   Genome();//random genome
   Genome(float32 setAngleWeight[8], float32 setLegLength[8], int setWheelLeg[2], float32 wheelLength[2], sf::Color setColor);
+
+  void mutateLegAngleWeight(int number);//number: which legAngle to mutate
+  void mutateLegLength(int number);
+  void mutateWheelLeg(int number);
+  void mutateWheelLength(int number);
+  void mutateColor();
 };
 
 #endif

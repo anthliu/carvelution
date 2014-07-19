@@ -29,3 +29,28 @@ Genome::Genome(float32 setAngleWeight[8], float32 setLegLength[8], int setWheelL
   std::copy(wheelLength, wheelLength + 2, setWheelLength);
   color = setColor;
 }
+
+void Genome::mutateLegAngleWeight(int number)
+{
+  legAngleWeight[number] = randAngleWeight();
+}
+
+void Genome::mutateLegLength(int number)
+{
+  legLength[number] = randLength();
+}
+
+void Genome::mutateWheelLeg(int number)
+{
+  wheelLeg[number] = randWheel();
+}
+
+void Genome::mutateWheelLength(int number)
+{
+  wheelLength[number] = randWheelLength();
+}
+
+void Genome::mutateColor()
+{
+  color = sf::Color(randHue(), randHue(), randHue());
+}
