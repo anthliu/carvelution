@@ -5,6 +5,7 @@
 #include <vector>
 #include "../include/car.hpp"
 #include "../include/ground.hpp"
+#include "../include/randomgen.hpp"
 #include "../include/configurations.hpp"
 
 int main()
@@ -22,7 +23,7 @@ int main()
   Ground ground(&world);
 
   int frames = 0;
-  int seconds = 0;
+  int seconds = -1;//gives the car more time in the start of the simulation
   float32 timeGoal = 0;//if the maxDist is not greater than timeGoal in conf::timeLimit, than end the car trial
   float32 maxDist = 0;
   int extensions = 0;
@@ -47,7 +48,6 @@ int main()
 	      ground.extend();
 	    }
 	}
-
       frames++;
       if (frames == conf::fps)
 	{
@@ -58,6 +58,7 @@ int main()
 	      seconds = 0;
 	      if (maxDist <= timeGoal + 10)
 		{
+		  seconds = -1;
 		  maxDist = 0;
 		  timeGoal = 0;
 		  car.destroy();

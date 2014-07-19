@@ -32,7 +32,7 @@ int randWheel()
 
 int randHue()
 {
-  return 64 + (rand() % 192);
+  return (rand() % 192);
 }
 
 void extendBaseHilly(std::vector <b2Vec2>& setPoint)

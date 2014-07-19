@@ -1,5 +1,6 @@
-CPP_FILES = $(wildcard src/*.cpp)
-OBJ_FILES := $(addprefix obj/,$(notdir $(CPP_FILES:.cpp=.o)))
+CPP_FILES=$(wildcard src/*.cpp)
+HPP_FILES=$(wildcard include/*.hpp)
+OBJ_FILES=$(addprefix obj/,$(notdir $(CPP_FILES:.cpp=.o)))
 CC=clang++
 FLAGS=-Wall -O
 LDLIBS=-lbox2d -lsfml-graphics -lsfml-window -lsfml-system
