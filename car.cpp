@@ -172,7 +172,20 @@ void Car::draw(sf::RenderWindow& window)
 
 Car::~Car()
 {
+  destroy();
+}
+
+void Car::destroy()
+{
+  for (int i = 0; i < 2; i++)
+    {
+      world->DestroyJoint(axis[i]);
+      world->DestroyBody(wheelBody[i]);
+      axis[i] = NULL;
+      wheelBody[i] = NULL;
+    }
   world->DestroyBody(body);
+  body = NULL;
 }
 
 b2Vec2 Car::getCenter() const

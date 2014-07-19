@@ -56,11 +56,13 @@ int main()
 	  if (seconds == conf::timeLimit)
 	    {
 	      seconds = 0;
-	      if (maxDist <= timeGoal)
+	      if (maxDist <= timeGoal + 10)
 		{
 		  maxDist = 0;
 		  timeGoal = 0;
-		  //car = Car(&world);
+		  car.destroy();
+		  car.reset();
+		  center = car.getCenter();
 		}
 	      else
 		{

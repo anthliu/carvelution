@@ -26,6 +26,7 @@ public:
   ~Car();
   void reset();
   void reset(float32 setAngleWeight[8], float32 setLegLength[8], int setWheelLeg[2], float32 wheelLength[2], sf::Color setColor);
+  void destroy();//destroy car parts from world
   void draw(sf::RenderWindow& window);
   b2Vec2 getCenter() const;
 };

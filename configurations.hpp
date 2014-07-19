@@ -37,7 +37,7 @@ namespace conf
 
   const float32 baseHillyChange = 2.0f;
 
-  const int timeLimit = 3;
+  const int timeLimit = 1;
 }
 
 #endif
