@@ -4,6 +4,7 @@
 #include <cmath>
 #include <algorithm>
 #include "../include/car.hpp"
+#include "../include/genome.hpp"
 #include "../include/randomgen.hpp"
 #include "../include/configurations.hpp"
 
@@ -48,6 +49,18 @@ void Car::reset(float32 setAngleWeight[8], float32 setLegLength[8], int setWheel
   color = setColor;
 
   buildBody();
+}
+
+Car::Car(Genome& gene, b2World* setWorld)
+{
+  world = setWorld;
+
+  reset(gene);
+}
+
+void Car::reset(Genome& gene)
+{
+  reset(gene.legAngleWeight, gene.legLength, gene.wheelLeg, gene.wheelLength, gene.color);
 }
 
 void Car::buildBody()

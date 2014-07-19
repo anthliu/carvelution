@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <Box2d/Box2d.h>
+#include "Genome.hpp"
 
 class Car
 {
@@ -22,10 +23,12 @@ class Car
   void buildBody();//build the body in b2World
 public:
   Car(b2World* setWorld);//initialize random Car
-  Car(float32 setAngleWeight[8], float32 setLegLength[8], int setWheelLeg[2], float32 wheelLength[2], sf::Color setColor, b2World* setWorld);
+  Car(float32 setAngleWeight[8], float32 setLegLength[8], int setWheelLeg[2], float32 setWheelLength[2], sf::Color setColor, b2World* setWorld);
+  Car(Genome& gene, b2World* setWorld);
   ~Car();
   void reset();
   void reset(float32 setAngleWeight[8], float32 setLegLength[8], int setWheelLeg[2], float32 wheelLength[2], sf::Color setColor);
+  void reset(Genome& gene);
   void destroy();//destroy car parts from world
   void draw(sf::RenderWindow& window);
   b2Vec2 getCenter() const;
