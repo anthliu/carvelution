@@ -4,6 +4,8 @@
 #include <Box2d/Box2d.h>
 #include <vector>
 
+float32 randFloat(float32 a, float32 b);
+
 float32 randAngleWeight();
 float32 randLength();
 float32 randWheelLength();

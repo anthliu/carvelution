@@ -3,6 +3,11 @@
 #include "../include/randomgen.hpp"
 #include "../include/configurations.hpp"
 
+float32 randFloat(float32 a, float32 b)
+{
+  return a + (static_cast <float32> (rand()) / static_cast <float32> (RAND_MAX / (b - a)));
+}
+
 float32 randAngleWeight()
 {
   /*Retrieves a random weight from 0.02 to 1.0

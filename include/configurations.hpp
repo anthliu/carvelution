@@ -16,7 +16,7 @@ namespace conf
   const float32 maxLength = 5.0f;
   const int maxWheelSize = 3;
 
-  const float32 carDensity = 3.0f;
+  const float32 carDensity = 1.5f;
   const float32 carFriction = 0.7f;
   const float32 carRestitution = 0.0f;
 

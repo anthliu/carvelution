@@ -18,6 +18,8 @@ public:
   Genome();//random genome
   Genome(float32 setAngleWeight[8], float32 setLegLength[8], int setWheelLeg[2], float32 wheelLength[2], sf::Color setColor);
 
+  void mutate(float32 mutateRate);//mutate all attributes at a chance (mutateRate)
+
   void mutateLegAngleWeight(int number);//number: which legAngle to mutate
   void mutateLegLength(int number);
   void mutateWheelLeg(int number);

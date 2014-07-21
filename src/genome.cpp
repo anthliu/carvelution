@@ -54,3 +54,25 @@ void Genome::mutateColor()
 {
   color = sf::Color(randHue(), randHue(), randHue());
 }
+
+void Genome::mutate(float32 mutateRate)
+{
+  /*mutateRate : 0.0f to 1.0f*/
+  for (int i = 0; i < 8; i++)
+    {
+      if (randFloat(0.0f, 1.0f) <= mutateRate)
+	legAngleWeight[i] = randAngleWeight();
+      if (randFloat(0.0f, 1.0f) <= mutateRate)
+	legLength[i] = randLength();
+    }
+  for (int i = 0; i < 2; i++)
+    {
+      if (randFloat(0.0f, 1.0f) <= mutateRate)
+	wheelLeg[i] = randWheel();
+      if (randFloat(0.0f, 1.0f) <= mutateRate)
+	wheelLength[i] = randWheelLength();
+    }
+
+  if (randFloat(0.0f, 1.0f) <= mutateRate)
+    color = sf::Color(randHue(), randHue(), randHue());
+}
