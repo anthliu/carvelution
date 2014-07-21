@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <Box2d/Box2d.h>
+#include <stdio.h>
 
 #include "../include/genome.hpp"
 #include "../include/randomgen.hpp"

@@ -7,7 +7,7 @@
 #include "../include/randomgen.hpp"
 #include "../include/configurations.hpp"
 
-Population::Population(int populationNumber) : car(populationNumber, Genome()), score(populationNumber, 0)
+Population::Population(int populationNumber) : car(populationNumber), score(populationNumber, 0)
 {
   for (std::vector<float32>::size_type i = 0; i != score.size(); i++)
     {

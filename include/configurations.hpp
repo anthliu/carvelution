@@ -39,6 +39,8 @@ namespace conf
 
   const int timeLimit = 1;
   const float32 mutationRate = 0.05f;
+  const int populationSize = 20;
+  const float32 minScore = 0.5f;
 }
 
 #endif

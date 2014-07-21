@@ -42,10 +42,10 @@ Car::Car(float32 setAngleWeight[8], float32 setLegLength[8], int setWheelLeg[2],
 
 void Car::reset(float32 setAngleWeight[8], float32 setLegLength[8], int setWheelLeg[2], float32 setWheelLength[2], sf::Color setColor)
 {
-  std::copy(legAngleWeight, legAngleWeight + 8, setAngleWeight);
-  std::copy(legLength, legLength + 8, setLegLength);
-  std::copy(wheelLeg, wheelLeg + 2, setWheelLeg);
-  std::copy(wheelLength, wheelLength + 2, setWheelLength);
+  std::copy(setAngleWeight, setAngleWeight + 8, legAngleWeight);
+  std::copy(setLegLength, setLegLength + 8, legLength);
+  std::copy(setWheelLeg, setWheelLeg + 2, wheelLeg);
+  std::copy(setWheelLength, setWheelLength + 2, wheelLength);
   color = setColor;
 
   buildBody();
@@ -68,7 +68,6 @@ void Car::buildBody()
   /* the center of the car is the origin; (0.0, 0.0)
    
    */
-
   b2BodyDef bodyDef;
   bodyDef.type = b2_dynamicBody;
   bodyDef.position.Set(0.0f, 0.0f);
