@@ -9,10 +9,7 @@
 
 Population::Population(int populationNumber) : car(populationNumber), score(populationNumber, 0)
 {
-  for (std::vector<float32>::size_type i = 0; i != score.size(); i++)
-    {
-      totalScore += score[i];
-    }
+  totalScore = 0.0f;
 }
 
 Population::Population(const Population& otherPopulation)
@@ -41,6 +38,14 @@ int Population::roulette()
 void Population::passOn()
 {
   /*implement roulette wheel inheritance*/
+
+  //first update total score
+  totalScore = 0;
+  for (std::vector<float32>::size_type i = 0; i != score.size(); i++)
+    {
+      totalScore += score[i];
+    }
+
   std::vector<Genome> oldCar = car;
 
   for (std::vector<Genome>::size_type i = 0; i != car.size(); i++)
