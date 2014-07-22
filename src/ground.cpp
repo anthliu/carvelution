@@ -1,6 +1,7 @@
 #include <Box2d/Box2d.h>
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <algorithm>
 #include "../include/ground.hpp"
 #include "../include/randomgen.hpp"
 #include "../include/configurations.hpp"
@@ -33,25 +34,31 @@ void Ground::buildBody()
   b2BodyDef bodyDef;
   body = world->CreateBody(&bodyDef);
   body->CreateFixture(&chain, 0.0f);
+
+  //update line
+  GSet updateLine;
+  for(std::vector<b2Vec2>::size_type index = line.size() + 1; index < point.size(); index++)
+    {
+      updateLine.tl = sf::Vertex(sf::Vector2f(conf::drawScale * point[index - 1].x, -1 * conf::drawScale * point[index - 1].y));
+      updateLine.bl = sf::Vertex(sf::Vector2f(conf::drawScale * point[index - 1].x, -1 * conf::drawScale * point[index - 1].y + conf::groundThickness));
+      updateLine.tr = sf::Vertex(sf::Vector2f(conf::drawScale * point[index].x, -1 * conf::drawScale * point[index].y));
+      updateLine.br = sf::Vertex(sf::Vector2f(conf::drawScale * point[index].x, -1 * conf::drawScale * point[index].y + conf::groundThickness));
+
+      updateLine.tl.color = sf::Color::Black;
+      updateLine.bl.color = sf::Color::Black;
+      updateLine.tr.color = sf::Color::Black;
+      updateLine.br.color = sf::Color::Black;
+
+      line.push_back(updateLine);
+    }
 }
 
 void Ground::draw(sf::RenderWindow& window)
 {
-  sf::Vertex line[4];
-
-  for(std::vector<b2Vec2>::size_type index = 1; index < point.size(); index++)
+  for(std::vector<GSet>::iterator iter = line.begin(); iter != line.end(); ++iter)
     {
-      line[0] = sf::Vertex(sf::Vector2f(conf::drawScale * point[index - 1].x, -1 * conf::drawScale * point[index - 1].y));
-      line[1] = sf::Vertex(sf::Vector2f(conf::drawScale * point[index - 1].x, -1 * conf::drawScale * point[index - 1].y + conf::groundThickness));
-      line[2] = sf::Vertex(sf::Vector2f(conf::drawScale * point[index].x, -1 * conf::drawScale * point[index].y));
-      line[3] = sf::Vertex(sf::Vector2f(conf::drawScale * point[index].x, -1 * conf::drawScale * point[index].y + conf::groundThickness));
-
-      line[0].color = sf::Color::Black;
-      line[1].color = sf::Color::Black;
-      line[2].color = sf::Color::Black;
-      line[3].color = sf::Color::Black;
-
-      window.draw(line, 4, sf::TrianglesStrip);
+      sf::Vertex drawBox[4] = {(*iter).tl, (*iter).bl, (*iter).tr, (*iter).br};
+      window.draw(drawBox, 4, sf::TrianglesStrip);
     }
 
 }

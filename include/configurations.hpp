@@ -25,8 +25,8 @@ namespace conf
   const float32 wheelFriction = 0.9f;
   const float32 wheelRestitution = 0.0f;
 
-  const float32 axisSpeed = -2000.0f;
-  const float32 maxTorque = 500.0f;
+  const float32 axisSpeed = -1000.0f;
+  const float32 maxTorque = 200.0f;
 
   const int drawScale = 30;
   const int drawBorder = 3;
