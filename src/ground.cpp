@@ -44,10 +44,10 @@ void Ground::buildBody()
       updateLine.tr = sf::Vertex(sf::Vector2f(conf::drawScale * point[index].x, -1 * conf::drawScale * point[index].y));
       updateLine.br = sf::Vertex(sf::Vector2f(conf::drawScale * point[index].x, -1 * conf::drawScale * point[index].y + conf::groundThickness));
 
-      updateLine.tl.color = sf::Color::Black;
-      updateLine.bl.color = sf::Color::Black;
-      updateLine.tr.color = sf::Color::Black;
-      updateLine.br.color = sf::Color::Black;
+      updateLine.tl.color = sf::Color(randHue(), randHue(), randHue());
+      updateLine.bl.color = sf::Color(randHue(), randHue(), randHue());
+      updateLine.tr.color = sf::Color(randHue(), randHue(), randHue());
+      updateLine.br.color = sf::Color(randHue(), randHue(), randHue());
 
       line.push_back(updateLine);
     }
