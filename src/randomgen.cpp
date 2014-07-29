@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <Box2d/Box2d.h>
-#include "../include/randomgen.hpp"
-#include "../include/configurations.hpp"
+#include "randomgen.hpp"
+#include "configurations.hpp"
 
 float32 randFloat(float32 a, float32 b)
 {

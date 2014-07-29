@@ -2,10 +2,10 @@
 #include <SFML/Graphics.hpp>
 #include <Box2d/Box2d.h>
 #include <stdio.h>
-#include "../include/genome.hpp"
-#include "../include/population.hpp"
-#include "../include/randomgen.hpp"
-#include "../include/configurations.hpp"
+#include "genome.hpp"
+#include "population.hpp"
+#include "randomgen.hpp"
+#include "configurations.hpp"
 
 Population::Population(int populationNumber) : car(populationNumber), score(populationNumber, 0)
 {

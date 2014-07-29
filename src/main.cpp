@@ -3,11 +3,11 @@
 #include <stdio.h>
 #include <time.h>
 #include <vector>
-#include "../include/car.hpp"
-#include "../include/ground.hpp"
-#include "../include/population.hpp"
-#include "../include/randomgen.hpp"
-#include "../include/configurations.hpp"
+#include "car.hpp"
+#include "ground.hpp"
+#include "population.hpp"
+#include "randomgen.hpp"
+#include "configurations.hpp"
 
 int main()
 {

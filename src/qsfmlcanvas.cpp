@@ -1,4 +1,4 @@
-#include "../include/qsfmlcanvas.hpp"
+#include "qsfmlcanvas.hpp"
 
 #ifdef Q_WS_X11
   #include <Qt/qx11info_x11.h>
@@ -18,11 +18,6 @@ QSFMLCanvas::QSFMLCanvas(QWidget* parent, const QPoint& position, const QSize& s
   resize(size);
 
   simTimer.setInterval(frameTime);
-}
-
-QSFMLCanvas::~QSFMLCanvas()
-{
-  ///// 
 }
 
 void QSFMLCanvas::OnInit()

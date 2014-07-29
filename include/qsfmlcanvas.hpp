@@ -8,7 +8,6 @@ class QSFMLCanvas : public QWidget, public sf::RenderWindow
 {
 public:
   QSFMLCanvas(QWidget* parent, const QPoint& position, const QSize& size, unsigned int frameTime = 0);
-  virtual ~QSFMLCanvas();
 private:
   virtual void OnInit();
   virtual void OnUpdate();

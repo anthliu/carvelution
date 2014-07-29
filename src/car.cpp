@@ -3,10 +3,10 @@
 #include <stdio.h>
 #include <cmath>
 #include <algorithm>
-#include "../include/car.hpp"
-#include "../include/genome.hpp"
-#include "../include/randomgen.hpp"
-#include "../include/configurations.hpp"
+#include "car.hpp"
+#include "genome.hpp"
+#include "randomgen.hpp"
+#include "configurations.hpp"
 
 Car::Car(b2World* setWorld)
 {

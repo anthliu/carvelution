@@ -2,9 +2,9 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <algorithm>
-#include "../include/ground.hpp"
-#include "../include/randomgen.hpp"
-#include "../include/configurations.hpp"
+#include "ground.hpp"
+#include "randomgen.hpp"
+#include "configurations.hpp"
 
 Ground::Ground(b2World* setWorld) : point(3)
 {
