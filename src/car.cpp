@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <cmath>
 #include <algorithm>
+#include "simulation.hpp"
 #include "car.hpp"
 #include "genome.hpp"
 #include "randomgen.hpp"
@@ -178,6 +179,31 @@ void Car::draw(sf::RenderWindow& window)
 
       wheelAngle[i] = wheelBody[i]->GetAngle();
       window.draw(drawWheel[i]);
+    }
+
+}
+
+void Car::draw(Simulation& sim)
+{
+  //first get the new position of the polygon then draw
+  b2Vec2 polygonPosition = body->GetPosition();
+  drawPolygon.setRotation((-180.f / M_PI) * body->GetAngle());
+  drawPolygon.setPosition(sf::Vector2f(conf::drawScale * polygonPosition.x, -1 * conf::drawScale * (polygonPosition.y)));
+
+  sim.draw(drawPolygon);
+
+  //get wheel positions then draw
+  b2Vec2 wheelPosition[2];
+  float32 wheelAngle[2];
+  sf::Vector2f wheelCenter[2];
+  for (int i = 0; i < 2; i++)
+    {
+      wheelPosition[i] = wheelBody[i]->GetWorldCenter();
+      wheelCenter[i] = sf::Vector2f(conf::drawScale * wheelPosition[i].x - drawWheel[i].getRadius(), -1 * conf::drawScale * wheelPosition[i].y - drawWheel[i].getRadius());
+      drawWheel[i].setPosition(wheelCenter[i]);
+
+      wheelAngle[i] = wheelBody[i]->GetAngle();
+      sim.draw(drawWheel[i]);
     }
 
 }

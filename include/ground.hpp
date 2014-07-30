@@ -1,6 +1,8 @@
 #ifndef GROUND_HPP
 #define GROUND_HPP
 
+class Simulation;
+
 #include <Box2d/Box2d.h>
 #include <SFML/Graphics.hpp>
 #include <vector>
@@ -29,6 +31,7 @@ public:
   Ground(b2World* setWorld);
   ~Ground();
   void draw(sf::RenderWindow& window);
+  void draw(Simulation& sim);
   void extend();
 };
 

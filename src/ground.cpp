@@ -5,6 +5,7 @@
 #include "ground.hpp"
 #include "randomgen.hpp"
 #include "configurations.hpp"
+#include "simulation.hpp"
 
 Ground::Ground(b2World* setWorld) : point(3)
 {
@@ -59,6 +60,16 @@ void Ground::draw(sf::RenderWindow& window)
     {
       sf::Vertex drawBox[4] = {(*iter).tl, (*iter).bl, (*iter).tr, (*iter).br};
       window.draw(drawBox, 4, sf::TrianglesStrip);
+    }
+
+}
+
+void Ground::draw(Simulation& sim)
+{
+  for(std::vector<GSet>::iterator iter = line.begin(); iter != line.end(); ++iter)
+    {
+      sf::Vertex drawBox[4] = {(*iter).tl, (*iter).bl, (*iter).tr, (*iter).br};
+      sim.draw(drawBox, 4, sf::TrianglesStrip);
     }
 
 }

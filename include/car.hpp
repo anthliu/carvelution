@@ -1,9 +1,11 @@
 #ifndef CAR_HPP
 #define CAR_HPP
 
+class Simulation;
+
 #include <SFML/Graphics.hpp>
 #include <Box2d/Box2d.h>
-#include "Genome.hpp"
+#include "genome.hpp"
 
 class Car
 {
@@ -31,6 +33,7 @@ public:
   void reset(Genome& gene);
   void destroy();//destroy car parts from world
   void draw(sf::RenderWindow& window);
+  void draw(Simulation& sim);
   b2Vec2 getCenter() const;
 };
 
